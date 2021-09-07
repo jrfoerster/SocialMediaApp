@@ -17,6 +17,7 @@ namespace SocialMedia.Data
         public int PostId { get; set; }
         public virtual Post Post { get; set; }
 
+        [Required]
         public Guid OwnerId { get; set; }
     }
 }

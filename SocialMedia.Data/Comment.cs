@@ -12,12 +12,17 @@ namespace SocialMedia.Data
     {
         [Key]
         public int Id { get; set; }
-        public string Text { get; set; }
-        public Guid AuthorId { get; set; }
-        public virtual List<Reply> Replies { get; set; } = new List<Reply>();
 
         [ForeignKey(nameof(Post))]
         public int PostId { get; set; }
         public virtual Post Post { get; set; }
+
+        [Required]
+        public string Text { get; set; }
+
+        [Required]
+        public Guid AuthorId { get; set; }
+
+        public virtual List<Reply> Replies { get; set; } = new List<Reply>();
     }
 }
