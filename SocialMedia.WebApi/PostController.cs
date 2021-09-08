@@ -10,7 +10,8 @@ namespace SocialMedia.WebApi
     public class PostController : ApiController
     {
         // GET api/<controller>
-        public IEnumerable<string> Get()
+        [Authorize]
+        public class <string> Get()
         {
             return new string[] { "value1", "value2" };
         }
@@ -22,8 +23,14 @@ namespace SocialMedia.WebApi
         }
 
         // POST api/<controller>
-        public void Post([FromBody] string value)
+        public class PostController : ApiController
         {
+            private PostService CreatePostService()
+            {
+                var authorId = Guid.Parse(User.Identity.GetAuthorId());
+                var postService = new PostService(authorId);
+                return postService;
+            }
         }
 
         // PUT api/<controller>/5
