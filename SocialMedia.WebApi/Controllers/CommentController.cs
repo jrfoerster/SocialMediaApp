@@ -30,6 +30,16 @@ namespace SocialMedia.WebApi.Controllers
         //    return "value";
         //}
 
+        // GET: api/Comment/Post/{id}
+        [HttpGet]
+        [Route("api/Comment/Post/{id}")]
+        public IHttpActionResult GetAllByPostId([FromUri] int id)
+        {
+            var service = CreateCommentService();
+            var comments = service.GetCommentsByPostId(id);
+            return Ok(comments);
+        }
+
         // POST: api/Comment
         public IHttpActionResult Post([FromBody]CommentCreate comment)
         {
