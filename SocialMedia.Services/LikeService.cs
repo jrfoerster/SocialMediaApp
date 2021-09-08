@@ -35,5 +35,24 @@ namespace SocialMedia.Services
 				return ctx.SaveChanges() == 1;
 			}
 		}
+
+		//GET BY ID ---  READ BY ID
+		public LikeDetail GetLikeById(int id)
+		{
+			using (var ctx = new ApplicationDbContext())
+			{
+				var entity =
+					ctx
+						.Likes
+						.Single(e => e.PostId == id && e.OwnerId == _userId);
+				return
+					new LikeDetail
+					{
+						OwnerId = _userId,
+						PostId = entity.PostId,
+						Post = entity.Post,
+					};
+			}
+		}
 	}
 }

@@ -31,5 +31,13 @@ namespace SocialMedia.WebApi.Controllers
                 return InternalServerError();
             return Ok();
         }
+
+        // GET by id  -- READ by id
+        public IHttpActionResult Get(int id)
+        {
+            LikeService likeService = CreateLikeService();
+            var like = likeService.GetLikeById(id);
+            return Ok(like);
+        }
     }
 }
