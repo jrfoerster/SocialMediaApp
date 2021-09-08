@@ -12,15 +12,11 @@ namespace SocialMedia.WebApi
     {
         // GET api/<controller>
         [Authorize]
-        public class <string> Get()
+        public IHttpActionResult Get()
         {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<controller>/5
-        public string Get(int id)
-        {
-            return "value";
+            PostService postService = CreatePostService();
+            var posts = noteService.GetPosts();
+            return Ok(posts);
         }
 
         // POST api/<controller>
