@@ -35,5 +35,27 @@ namespace SocialMedia.Services
                 return ctx.SaveChanges() == 1;
             }
         }
+
+        public IEnumerable<PostListItem> GetPosts()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query =
+                    ctx
+                        .Posts
+                        .Where(e => e.AuthorId == _authorId)
+                        .Select(
+                            e =>
+                                new PostListItem
+                                {
+                                    Id = e.Id,
+                                    Title = e.Title,
+                                    Text = e.Text,
+                                    _authorId = e.AuthorId,
+                                }
+                        );
+                return query.ToArray();
+            }
+        }
     }
 }
