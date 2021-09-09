@@ -26,9 +26,9 @@ namespace SocialMedia.WebApi.Controllers
         //    return "value";
         //}
 
-        // GET: api/Comment/Post/{id}
+        // GET: api/Post/{id}/Comment
         [HttpGet]
-        [Route("api/Comment/Post/{id}")]
+        [Route("api/Post/{id}/Comment")]
         public IHttpActionResult GetAllByPostId([FromUri] int id)
         {
             var service = CreateCommentService();
