@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -55,7 +55,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LikeService.cs" />
+    <Compile Include="CommentService.cs" />
+    <Compile Include="PostService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReplyService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -67,7 +70,7 @@
       <Name>SocialMedia.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\SocialMedia.Models\SocialMedia.Models.csproj">
-      <Project>{465a7044-e80f-410f-ad79-e1d9d8fb0b4e}</Project>
+      <Project>{465A7044-E80F-410F-AD79-E1D9D8FB0B4E}</Project>
       <Name>SocialMedia.Models</Name>
     </ProjectReference>
   </ItemGroup>
