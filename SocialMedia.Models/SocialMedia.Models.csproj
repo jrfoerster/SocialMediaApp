@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="LikeCreate.cs" />
     <Compile Include="LikeDetail.cs" />
+    <Compile Include="LikeEdit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

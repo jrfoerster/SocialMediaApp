@@ -55,6 +55,22 @@ namespace SocialMedia.Services
 			}
 		}
 
+		//UPDATE
+		public bool UpdateLike(LikeEdit model)
+		{
+			using (var ctx = new ApplicationDbContext())
+			{
+				var entity =
+					ctx
+						.Likes
+						.Single(e => e.PostId == model.PostId && e.OwnerId == _userId);
+
+				entity.PostId = model.PostId;
+
+				return ctx.SaveChanges() == 1;
+			}
+		}
+
 		// DELETE
 		public bool DeleteLike(int postId)
 		{

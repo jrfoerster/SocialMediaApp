@@ -40,6 +40,20 @@ namespace SocialMedia.WebApi.Controllers
             return Ok(like);
         }
 
+        // PUT -- UPDATE
+        public IHttpActionResult Put(LikeEdit like)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var service = CreateLikeService();
+
+            if (!service.UpdateLike(like))
+                return InternalServerError();
+
+            return Ok();
+        }
+
         // DELETE
         public IHttpActionResult Delete(int id)
         {
