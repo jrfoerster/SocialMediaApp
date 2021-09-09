@@ -6,6 +6,7 @@ using System.Web.Http;
 
 namespace SocialMedia.WebApi.Controllers
 {
+    [Authorize]
     public class CommentController : ApiController
     {
         private CommentService CreateCommentService()
@@ -36,6 +37,16 @@ namespace SocialMedia.WebApi.Controllers
             return Ok(comments);
         }
 
+        // GET: api/Author/{id}/Comment
+        [HttpGet]
+        [Route("api/Author/{id}/Comment")]
+        public IHttpActionResult GetAllByAuthorId([FromUri] Guid id)
+        {
+            var service = CreateCommentService();
+            var comments = service.GetCommentsByAuthorId(id);
+            return Ok(comments);
+        }
+
         // POST: api/Comment
         public IHttpActionResult Post([FromBody]CommentCreate comment)
         {
@@ -50,6 +61,11 @@ namespace SocialMedia.WebApi.Controllers
             }
 
             var service = CreateCommentService();
+
+            if (service.PostIdExists(comment.PostId) == false)
+            {
+                return NotFound();
+            }
 
             if (service.CreateComment(comment))
             {
