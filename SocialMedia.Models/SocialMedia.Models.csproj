@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -54,6 +54,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LikeCreate.cs" />
+    <Compile Include="LikeDetail.cs" />
+    <Compile Include="LikeEdit.cs" />
     <Compile Include="CommentCreate.cs" />
     <Compile Include="CommentListItem.cs" />
     <Compile Include="PostCreate.cs" />
@@ -65,6 +68,12 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SocialMedia.Data\SocialMedia.Data.csproj">
+      <Project>{8C70A48D-4064-4FC1-A981-E69DF48254B8}</Project>
+      <Name>SocialMedia.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
