@@ -1,35 +1,35 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using SocialMedia.Models;
 using SocialMedia.Services;
 
 namespace SocialMedia.WebApi
 {
+    [Authorize]
     public class PostController : ApiController
     {
         // GET api/<controller>
-        [Authorize]
+       
         public IHttpActionResult Get()
         {
             PostService postService = CreatePostService();
-            var posts = noteService.GetPosts();
+            var posts = postService.GetPosts();
             return Ok(posts);
         }
 
-        // POST api/<controller>
-        public class PostController : ApiController
-        {
             private PostService CreatePostService()
             {
-                var authorId = Guid.Parse(User.Identity.GetAuthorId());
+                var authorId = Guid.Parse(User.Identity.GetUserId());
                 var postService = new PostService(authorId);
                 return postService;
             }
-        }
 
+        // POST api/<controller>
         public IHttpActionResult Post(PostCreate post)
         {
             if (!ModelState.IsValid)
