@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SocialMedia.Data;
+using SocialMedia.Models;
 
 namespace SocialMedia.Services
 {
@@ -20,19 +21,37 @@ namespace SocialMedia.Services
         {
             var entity =
                 new Post()
-                {
-                    Id = Model.Id,
+                {    
                     Title = Model.Title,
                     Text = Model.Text,
                     AuthorId = _authorId,
-                    Comments = Model.Comments,
-                    Likes = Model.Likes
                 };
 
             using (var ctx = new ApplicationDbContext())
             {
                 ctx.Posts.Add(entity);
                 return ctx.SaveChanges() == 1;
+            }
+        }
+
+        public IEnumerable<PostListItem> GetPosts()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query =
+                    ctx
+                        .Posts
+                        .Where(e => e.AuthorId == _authorId)
+                        .Select(
+                            e =>
+                                new PostListItem
+                                {
+                                    Title = e.Title,
+                                    Text = e.Text,
+                                    AuthorId = e.AuthorId,
+                                }
+                        );
+                return query.ToArray();
             }
         }
     }
