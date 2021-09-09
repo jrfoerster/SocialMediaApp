@@ -27,6 +27,9 @@ namespace SocialMedia.WebApi.Controllers
 
             var service = CreateLikeService();
 
+            if (!service.PostIdExists(like.PostId))
+                return NotFound();
+
             if (!service.CreateLike(like))
                 return InternalServerError();
             return Ok();

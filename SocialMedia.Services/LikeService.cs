@@ -17,6 +17,15 @@ namespace SocialMedia.Services
 			_userId = userId;
 		}
 
+		public bool PostIdExists(int postId)
+		{
+			using (var context = ApplicationDbContext.Create())
+			{
+				var post = context.Posts.Find(postId);
+				return post != null;
+			}
+		}
+
 		// POST -- CREATE
 		public bool CreateLike(LikeCreate model)
 		{
@@ -25,8 +34,6 @@ namespace SocialMedia.Services
 				{
 					OwnerId = _userId,
 					PostId = model.PostId,
-					Post = model.Post,
-					Id = model.Id
 				};
 
 			using (var ctx = new ApplicationDbContext())

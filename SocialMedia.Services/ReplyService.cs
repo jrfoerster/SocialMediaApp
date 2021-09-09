@@ -17,6 +17,15 @@ namespace SocialMedia.Services
             _userId = userId;
         }
 
+        public bool CommentIdExists(int commentId)
+        {
+            using (var context = ApplicationDbContext.Create())
+            {
+                var comment = context.Comments.Find(commentId);
+                return comment != null;
+            }
+        }
+
         public bool CreateReply(ReplyCreate model)
         {
             var reply =

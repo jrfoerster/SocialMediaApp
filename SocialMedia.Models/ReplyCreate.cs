@@ -12,7 +12,6 @@ namespace SocialMedia.Models
         [Required]
         [MaxLength(140, ErrorMessage = "Maximum character exceeded")]
         public string Text { get; set; }
-        public Guid AuthorId { get; set; }
         public int CommentId { get; set; }
     }
 }

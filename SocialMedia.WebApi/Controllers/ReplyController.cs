@@ -26,6 +26,9 @@ namespace SocialMedia.WebApi.Controllers
                 return BadRequest(ModelState);
 
             var service = CreateReplyService();
+            
+            if (!service.CommentIdExists(reply.CommentId))
+                return NotFound();
 
             if (!service.CreateReply(reply))
                 return InternalServerError();
