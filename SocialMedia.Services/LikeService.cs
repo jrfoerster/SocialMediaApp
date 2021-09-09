@@ -36,7 +36,7 @@ namespace SocialMedia.Services
 			}
 		}
 
-		//GET BY ID ---  READ BY ID
+		//GET BY Post ID ---  READ BY ID
 		public LikeDetail GetLikeById(int id)
 		{
 			using (var ctx = new ApplicationDbContext())
@@ -50,8 +50,24 @@ namespace SocialMedia.Services
 					{
 						OwnerId = _userId,
 						PostId = entity.PostId,
-						Post = entity.Post,
+						Post = entity.Post
 					};
+			}
+		}
+
+		// DELETE
+		public bool DeleteLike(int postId)
+		{
+			using (var ctx = new ApplicationDbContext())
+			{
+				var entity =
+					ctx
+						.Likes
+						.Single(e => e.PostId == postId && e.OwnerId == _userId);
+
+				ctx.Likes.Remove(entity);
+
+				return ctx.SaveChanges() == 1;
 			}
 		}
 	}

@@ -39,5 +39,16 @@ namespace SocialMedia.WebApi.Controllers
             var like = likeService.GetLikeById(id);
             return Ok(like);
         }
+
+        // DELETE
+        public IHttpActionResult Delete(int id)
+        {
+            var service = CreateLikeService();
+
+            if (!service.DeleteLike(id))
+                return InternalServerError();
+
+            return Ok();
+        }
     }
 }
