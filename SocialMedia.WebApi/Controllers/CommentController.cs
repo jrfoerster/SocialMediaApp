@@ -2,10 +2,6 @@
 using SocialMedia.Models;
 using SocialMedia.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace SocialMedia.WebApi.Controllers
@@ -29,6 +25,16 @@ namespace SocialMedia.WebApi.Controllers
         //{
         //    return "value";
         //}
+
+        // GET: api/Post/{id}/Comment
+        [HttpGet]
+        [Route("api/Post/{id}/Comment")]
+        public IHttpActionResult GetAllByPostId([FromUri] int id)
+        {
+            var service = CreateCommentService();
+            var comments = service.GetCommentsByPostId(id);
+            return Ok(comments);
+        }
 
         // POST: api/Comment
         public IHttpActionResult Post([FromBody]CommentCreate comment)

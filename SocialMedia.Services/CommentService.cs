@@ -2,6 +2,7 @@
 using SocialMedia.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SocialMedia.Services
 {
@@ -27,6 +28,22 @@ namespace SocialMedia.Services
             {
                 context.Comments.Add(comment);
                 return context.SaveChanges() == 1;
+            }
+        }
+
+        public IEnumerable<CommentListItem> GetCommentsByPostId(int postId)
+        {
+            using (var context = ApplicationDbContext.Create())
+            {
+                var query = context.Comments
+                    .Where(c => c.PostId == postId)
+                    .Select(c => new CommentListItem
+                    {
+                        Text = c.Text,
+                        AuthorId = c.AuthorId
+                    });
+
+                return query.ToArray();
             }
         }
     }
