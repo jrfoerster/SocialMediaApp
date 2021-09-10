@@ -17,7 +17,10 @@ namespace SocialMedia.Data
         public int CommentId { get; set; }
         public virtual Comment Comment { get; set; }
 
+        [Required]
         public string Text { get; set; }
+
+        [Required]
         public Guid AuthorId { get; set; }
     }
 }
