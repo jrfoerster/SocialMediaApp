@@ -83,6 +83,7 @@ namespace SocialMedia.Services
                     return false;
                 }
 
+                // TODO -- check _userId, I probably need to use the .Single() method
                 comment.Text = model.Text;
                 return context.SaveChanges() == 1;
             }
