@@ -71,5 +71,21 @@ namespace SocialMedia.Services
                 return query.ToArray();
             }
         }
+
+        public bool UpdateComment(CommentUpdate model)
+        {
+            using (var context = ApplicationDbContext.Create())
+            {
+                var comment = context.Comments.Find(model.CommentId);
+
+                if (comment is null)
+                {
+                    return false;
+                }
+
+                comment.Text = model.Text;
+                return context.SaveChanges() == 1;
+            }
+        }
     }
 }

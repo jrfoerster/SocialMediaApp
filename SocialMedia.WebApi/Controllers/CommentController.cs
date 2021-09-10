@@ -48,7 +48,7 @@ namespace SocialMedia.WebApi.Controllers
         }
 
         // POST: api/Comment
-        public IHttpActionResult Post([FromBody]CommentCreate comment)
+        public IHttpActionResult Post([FromBody] CommentCreate comment)
         {
             if (comment is null)
             {
@@ -77,10 +77,30 @@ namespace SocialMedia.WebApi.Controllers
             }
         }
 
-        //// PUT: api/Comment/5
-        //public void Put(int id, [FromBody]string value)
-        //{
-        //}
+        // PUT: api/Comment
+        public IHttpActionResult Put([FromBody] CommentUpdate comment)
+        {
+            if (comment is null)
+            {
+                return BadRequest("Http Request Body cannot be empty!");
+            }
+
+            if (ModelState.IsValid == false)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var service = CreateCommentService();
+
+            if (service.UpdateComment(comment))
+            {
+                return Ok();
+            }
+            else
+            {
+                return InternalServerError();
+            }
+        }
 
         //// DELETE: api/Comment/5
         //public void Delete(int id)
