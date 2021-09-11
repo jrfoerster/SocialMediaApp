@@ -36,7 +36,7 @@ namespace SocialMedia.WebApi.Controllers
         }
 
         // POST api/<controller>
-        public IHttpActionResult Post(PostCreate post)
+        public IHttpActionResult Post([FromBody] PostCreate post)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -50,7 +50,7 @@ namespace SocialMedia.WebApi.Controllers
         }
 
         //// PUT api/<controller>/
-        public IHttpActionResult Update(PostUpdate post)
+        public IHttpActionResult Put(PostUpdate post)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

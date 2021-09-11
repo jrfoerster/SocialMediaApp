@@ -81,6 +81,12 @@ namespace SocialMedia.Services
                 var post =
                     ctx
                         .Posts.FirstOrDefault(p => p.Id == model.PostId && p.AuthorId == _authorId);
+
+                if (post is null)
+                {
+                    return false;
+                }
+
                 post.Title = model.Title;
                 post.Text = model.Text;
              
@@ -95,6 +101,11 @@ namespace SocialMedia.Services
                 var post =
                     ctx
                         .Posts.FirstOrDefault(p => p.Id == id && p.AuthorId == _authorId);
+
+                if (post is null)
+                {
+                    return false;
+                }
 
                 ctx.Posts.Remove(post);
 
