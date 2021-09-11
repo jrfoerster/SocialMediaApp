@@ -6,12 +6,9 @@ namespace SocialMedia.Models
     public class ReplyEdit
     {
         [Required]
-        public int CommentId { get; set; }
+        public int ReplyId { get; set; }
 
         [Required]
         public string Text { get; set; }
-
-        [Required]
-        public Guid AuthorId { get; set; }
     }
 }

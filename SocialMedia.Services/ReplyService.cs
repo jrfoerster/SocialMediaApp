@@ -80,14 +80,19 @@ namespace SocialMedia.Services
                 return query.ToArray();
             }
         }
-        public bool DeleteReply(int commentId)
+        public bool DeleteReply(int replyId)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var entity =
                 ctx
                 .Replies
-                .Single(e => e.CommentId == commentId && e.AuthorId == _userId);
+                .FirstOrDefault(e => e.Id == replyId && e.AuthorId == _userId);
+
+                if (entity is null)
+                {
+                    return false;
+                }
 
                 ctx.Replies.Remove(entity);
 
@@ -102,10 +107,14 @@ namespace SocialMedia.Services
                 var entity =
                     ctx
                     .Replies
-                    .Single(e => e.CommentId == model.CommentId && e.AuthorId == _userId);
+                    .FirstOrDefault(e => e.Id == model.ReplyId && e.AuthorId == _userId);
+
+                if (entity is null)
+                {
+                    return false;
+                }
                 
                 entity.Text = model.Text;
-                entity.CommentId = model.CommentId;
 
                 return ctx.SaveChanges() == 1;
             }
