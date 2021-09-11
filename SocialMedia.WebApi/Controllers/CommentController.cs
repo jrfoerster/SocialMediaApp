@@ -15,21 +15,24 @@ namespace SocialMedia.WebApi.Controllers
             return new CommentService(userId);
         }
 
-        //// GET: api/Comment
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
+        // GET: api/Comment/{id}
+        public IHttpActionResult Get(int id)
+        {
+            var service = CreateCommentService();
+            var comment = service.GetCommentById(id);
 
-        //// GET: api/Comment/5
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+            if (comment is null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(comment);
+            }
+        }
 
-        // GET: api/Post/{id}/Comment
+        // GET: api/Comment?postId={postId}
         [HttpGet]
-        //[Route("api/Post/{id}/Comment")]
         public IHttpActionResult GetAllByPostId([FromUri] int postId)
         {
             var service = CreateCommentService();
@@ -37,9 +40,8 @@ namespace SocialMedia.WebApi.Controllers
             return Ok(comments);
         }
 
-        // GET: api/Author/{id}/Comment
+        // GET: api/Comment?authorId={authorId}
         [HttpGet]
-        //[Route("api/Author/{id}/Comment")]
         public IHttpActionResult GetAllByAuthorId([FromUri] Guid authorId)
         {
             var service = CreateCommentService();
@@ -106,7 +108,7 @@ namespace SocialMedia.WebApi.Controllers
         public IHttpActionResult Delete([FromUri] int id)
         {
             var service = CreateCommentService();
-            
+
             if (service.DeleteComment(id))
             {
                 return Ok();
