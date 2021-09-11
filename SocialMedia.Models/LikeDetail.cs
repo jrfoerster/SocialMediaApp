@@ -14,7 +14,6 @@ namespace SocialMedia.Models
 
         [Display(Name = "Post ID")]
         public int PostId { get; set; }
-        public virtual Post Post { get; set; }
 
         [Display(Name = "Owner ID")]
         public Guid OwnerId { get; set; }

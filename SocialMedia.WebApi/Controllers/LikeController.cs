@@ -35,11 +35,19 @@ namespace SocialMedia.WebApi.Controllers
             return Ok();
         }
 
-        // GET by id  -- READ by id
-        public IHttpActionResult Get(int id)
+        // GET by post id  -- READ by id
+        public IHttpActionResult GetByPost(int id)
         {
             LikeService likeService = CreateLikeService();
-            var like = likeService.GetLikeById(id);
+            var like = likeService.GetLikeByPostId(id);
+            return Ok(like);
+        }
+
+        // GET by owner id  -- READ by id
+        public IHttpActionResult GetByOwner(int id)
+        {
+            LikeService likeService = CreateLikeService();
+            var like = likeService.GetLikeByOwnerId(id);
             return Ok(like);
         }
 
