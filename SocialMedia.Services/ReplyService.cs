@@ -64,5 +64,21 @@ namespace SocialMedia.Services
                 return query.ToArray();
             }
         }
+
+        public IEnumerable<ReplyListItem> GetRepliesByCommentId(int commentId)
+        {
+            using (var ctx = ApplicationDbContext.Create())
+            {
+                var query = ctx.Replies
+                    .Where(e => e.CommentId == commentId)
+                    .Select(e => new ReplyListItem
+                    {
+                        Text = e.Text,
+                        CommentId = e.CommentId
+                    });
+
+                return query.ToArray();
+            }
+        }
     }
 }
