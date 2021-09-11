@@ -93,6 +93,8 @@ namespace SocialMedia.Services
 
                 return ctx.SaveChanges() == 1;
             }
+        }
+
         public bool UpdateReply(ReplyEdit model)
         {
             using(var ctx = new ApplicationDbContext())

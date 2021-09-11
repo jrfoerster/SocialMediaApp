@@ -26,7 +26,7 @@ namespace SocialMedia.WebApi.Controllers
                 return BadRequest(ModelState);
 
             var service = CreateReplyService();
-            
+
             if (!service.CommentIdExists(reply.CommentId))
                 return NotFound();
 
@@ -54,6 +54,11 @@ namespace SocialMedia.WebApi.Controllers
             var service = CreateReplyService();
 
             if (!service.DeleteReply(id))
+                return InternalServerError();
+
+            return Ok();
+        }
+
         public IHttpActionResult Put(ReplyEdit reply)
         {
             if (!ModelState.IsValid)
