@@ -40,6 +40,27 @@ namespace SocialMedia.Services
             }
         }
 
+        public CommentDetail GetCommentById(int id)
+        {
+            using (var context = ApplicationDbContext.Create())
+            {
+                var comment = context.Comments.FirstOrDefault(c => c.Id == id);
+                
+                if (comment is null)
+                {
+                    return null;
+                }
+
+                return new CommentDetail
+                {
+                    Id = comment.Id,
+                    PostId = comment.PostId,
+                    Text = comment.Text,
+                    AuthorId = comment.AuthorId
+                };
+            }
+        }
+
         public IEnumerable<CommentListItem> GetCommentsByPostId(int postId)
         {
             using (var context = ApplicationDbContext.Create())
