@@ -29,21 +29,21 @@ namespace SocialMedia.WebApi.Controllers
 
         // GET: api/Post/{id}/Comment
         [HttpGet]
-        [Route("api/Post/{id}/Comment")]
-        public IHttpActionResult GetAllByPostId([FromUri] int id)
+        //[Route("api/Post/{id}/Comment")]
+        public IHttpActionResult GetAllByPostId([FromUri] int postId)
         {
             var service = CreateCommentService();
-            var comments = service.GetCommentsByPostId(id);
+            var comments = service.GetCommentsByPostId(postId);
             return Ok(comments);
         }
 
         // GET: api/Author/{id}/Comment
         [HttpGet]
-        [Route("api/Author/{id}/Comment")]
-        public IHttpActionResult GetAllByAuthorId([FromUri] Guid id)
+        //[Route("api/Author/{id}/Comment")]
+        public IHttpActionResult GetAllByAuthorId([FromUri] Guid authorId)
         {
             var service = CreateCommentService();
-            var comments = service.GetCommentsByAuthorId(id);
+            var comments = service.GetCommentsByAuthorId(authorId);
             return Ok(comments);
         }
 

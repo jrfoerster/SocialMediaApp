@@ -76,14 +76,13 @@ namespace SocialMedia.Services
         {
             using (var context = ApplicationDbContext.Create())
             {
-                var comment = context.Comments.Find(model.CommentId);
+                var comment = context.Comments.FirstOrDefault(c => c.Id == model.CommentId && c.AuthorId == _userId);
 
                 if (comment is null)
                 {
                     return false;
                 }
 
-                // TODO -- check _userId, I probably need to use the .Single() method
                 comment.Text = model.Text;
                 return context.SaveChanges() == 1;
             }
