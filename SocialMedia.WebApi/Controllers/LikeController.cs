@@ -36,7 +36,7 @@ namespace SocialMedia.WebApi.Controllers
         }
 
         // GET by post id  -- READ by id
-        public IHttpActionResult GetByPost(int id)
+        public IHttpActionResult Get(int id)
         {
             LikeService likeService = CreateLikeService();
             var like = likeService.GetLikeByPostId(id);
@@ -44,10 +44,11 @@ namespace SocialMedia.WebApi.Controllers
         }
 
         // GET by owner id  -- READ by id
-        public IHttpActionResult GetByOwner(Guid id)
+        [HttpGet]
+        public IHttpActionResult GetByOwner([FromUri] Guid ownerId)
         {
             LikeService likeService = CreateLikeService();
-            var like = likeService.GetLikeByOwnerId(id);
+            var like = likeService.GetLikeByOwnerId(ownerId);
             return Ok(like);
         }
 

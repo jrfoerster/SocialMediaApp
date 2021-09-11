@@ -56,6 +56,7 @@ namespace SocialMedia.Services
 		
 					new LikeDetail
 					{
+						Id = e.Id,
 						OwnerId = e.OwnerId,
 						PostId = e.PostId
 					});
@@ -76,6 +77,7 @@ namespace SocialMedia.Services
 				
 					new LikeDetail
 					{
+						Id = e.Id,
 						OwnerId = _userId,
 						PostId = e.PostId
 					});
@@ -91,7 +93,12 @@ namespace SocialMedia.Services
 				var entity =
 					ctx
 						.Likes
-						.Single(e => e.PostId == model.PostId && e.OwnerId == _userId);
+						.FirstOrDefault(e => e.Id == model.Id && e.OwnerId == _userId);
+
+				if (entity is null)
+                {
+					return false;
+                }
 
 				entity.PostId = model.PostId;
 
@@ -100,14 +107,19 @@ namespace SocialMedia.Services
 		}
 
 		// DELETE
-		public bool DeleteLike(int postId)
+		public bool DeleteLike(int id)
 		{
 			using (var ctx = new ApplicationDbContext())
 			{
 				var entity =
 					ctx
 						.Likes
-						.Single(e => e.PostId == postId && e.OwnerId == _userId);
+						.FirstOrDefault(e => e.Id == id && e.OwnerId == _userId);
+
+				if (entity is null)
+                {
+					return false;
+                }
 
 				ctx.Likes.Remove(entity);
 
