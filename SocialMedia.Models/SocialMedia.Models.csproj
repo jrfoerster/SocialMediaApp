@@ -65,6 +65,7 @@
     <Compile Include="PostUpdate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReplyCreate.cs" />
+    <Compile Include="ReplyEdit.cs" />
     <Compile Include="ReplyListItem.cs" />
   </ItemGroup>
   <ItemGroup>

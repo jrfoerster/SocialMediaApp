@@ -80,5 +80,21 @@ namespace SocialMedia.Services
                 return query.ToArray();
             }
         }
+
+        public bool UpdateReply(ReplyEdit model)
+        {
+            using(var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                    .Replies
+                    .Single(e => e.CommentId == model.CommentId && e.AuthorId == _userId);
+                
+                entity.Text = model.Text;
+                entity.CommentId = model.CommentId;
+
+                return ctx.SaveChanges() == 1;
+            }
+        }
     }
 }
