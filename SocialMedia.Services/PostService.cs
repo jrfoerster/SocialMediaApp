@@ -54,5 +54,64 @@ namespace SocialMedia.Services
                 return query.ToArray();
             }
         }
+
+        public IEnumerable <PostListItem> GetPostsByAuthorId(Guid authorId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query =
+                    ctx
+                        .Posts
+                        .Where(e => e.AuthorId == authorId)
+                        .Select(e => 
+                        
+                    new PostListItem
+                    {
+                        Title = e.Title,
+                        Text = e.Text
+                    });
+                return query.ToArray();
+            }
+        }
+
+        public bool UpdatePost(PostUpdate model)
+        {
+            using(var ctx = new ApplicationDbContext())
+            {
+                var post =
+                    ctx
+                        .Posts.FirstOrDefault(p => p.Id == model.PostId && p.AuthorId == _authorId);
+
+                if (post is null)
+                {
+                    return false;
+                }
+
+                post.Title = model.Title;
+                post.Text = model.Text;
+             
+                return ctx.SaveChanges() == 1;
+            }
+        }
+
+        public bool DeletePost(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var post =
+                    ctx
+                        .Posts.FirstOrDefault(p => p.Id == id && p.AuthorId == _authorId);
+
+                if (post is null)
+                {
+                    return false;
+                }
+
+                ctx.Posts.Remove(post);
+
+                return ctx.SaveChanges() == 1;
+
+            }
+        }
     }
 }

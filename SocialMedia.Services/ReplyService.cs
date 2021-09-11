@@ -64,5 +64,60 @@ namespace SocialMedia.Services
                 return query.ToArray();
             }
         }
+
+        public IEnumerable<ReplyListItem> GetRepliesByCommentId(int commentId)
+        {
+            using (var ctx = ApplicationDbContext.Create())
+            {
+                var query = ctx.Replies
+                    .Where(e => e.CommentId == commentId)
+                    .Select(e => new ReplyListItem
+                    {
+                        Text = e.Text,
+                        CommentId = e.CommentId
+                    });
+
+                return query.ToArray();
+            }
+        }
+        public bool DeleteReply(int replyId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                ctx
+                .Replies
+                .FirstOrDefault(e => e.Id == replyId && e.AuthorId == _userId);
+
+                if (entity is null)
+                {
+                    return false;
+                }
+
+                ctx.Replies.Remove(entity);
+
+                return ctx.SaveChanges() == 1;
+            }
+        }
+
+        public bool UpdateReply(ReplyEdit model)
+        {
+            using(var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                    .Replies
+                    .FirstOrDefault(e => e.Id == model.ReplyId && e.AuthorId == _userId);
+
+                if (entity is null)
+                {
+                    return false;
+                }
+                
+                entity.Text = model.Text;
+
+                return ctx.SaveChanges() == 1;
+            }
+        }
     }
 }

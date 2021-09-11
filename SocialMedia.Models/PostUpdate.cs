@@ -2,13 +2,15 @@
 
 namespace SocialMedia.Models
 {
-    public class ReplyCreate
+    public class PostUpdate
     {
         [Required]
-        [MaxLength(140, ErrorMessage = "Maximum character exceeded")]
+        public string Title { get; set; }
+
+        [Required]
         public string Text { get; set; }
 
         [Required]
-        public int CommentId { get; set; }
+        public int PostId { get; set; }
     }
 }

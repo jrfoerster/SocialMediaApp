@@ -2,10 +2,10 @@
 
 namespace SocialMedia.Models
 {
-    public class PostCreate
+    public class CommentUpdate
     {
         [Required]
-        public string Title { get; set; }
+        public int CommentId { get; set; }
 
         [Required]
         public string Text { get; set; }

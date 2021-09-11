@@ -15,40 +15,42 @@ namespace SocialMedia.WebApi.Controllers
             return new CommentService(userId);
         }
 
-        //// GET: api/Comment
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
-        //// GET: api/Comment/5
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        // GET: api/Post/{id}/Comment
-        [HttpGet]
-        [Route("api/Post/{id}/Comment")]
-        public IHttpActionResult GetAllByPostId([FromUri] int id)
+        // GET: api/Comment/{id}
+        public IHttpActionResult Get(int id)
         {
             var service = CreateCommentService();
-            var comments = service.GetCommentsByPostId(id);
+            var comment = service.GetCommentById(id);
+
+            if (comment is null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(comment);
+            }
+        }
+
+        // GET: api/Comment?postId={postId}
+        [HttpGet]
+        public IHttpActionResult GetAllByPostId([FromUri] int postId)
+        {
+            var service = CreateCommentService();
+            var comments = service.GetCommentsByPostId(postId);
             return Ok(comments);
         }
 
-        // GET: api/Author/{id}/Comment
+        // GET: api/Comment?authorId={authorId}
         [HttpGet]
-        [Route("api/Author/{id}/Comment")]
-        public IHttpActionResult GetAllByAuthorId([FromUri] Guid id)
+        public IHttpActionResult GetAllByAuthorId([FromUri] Guid authorId)
         {
             var service = CreateCommentService();
-            var comments = service.GetCommentsByAuthorId(id);
+            var comments = service.GetCommentsByAuthorId(authorId);
             return Ok(comments);
         }
 
         // POST: api/Comment
-        public IHttpActionResult Post([FromBody]CommentCreate comment)
+        public IHttpActionResult Post([FromBody] CommentCreate comment)
         {
             if (comment is null)
             {
@@ -77,14 +79,44 @@ namespace SocialMedia.WebApi.Controllers
             }
         }
 
-        //// PUT: api/Comment/5
-        //public void Put(int id, [FromBody]string value)
-        //{
-        //}
+        // PUT: api/Comment
+        public IHttpActionResult Put([FromBody] CommentUpdate comment)
+        {
+            if (comment is null)
+            {
+                return BadRequest("Http Request Body cannot be empty!");
+            }
 
-        //// DELETE: api/Comment/5
-        //public void Delete(int id)
-        //{
-        //}
+            if (ModelState.IsValid == false)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var service = CreateCommentService();
+
+            if (service.UpdateComment(comment))
+            {
+                return Ok();
+            }
+            else
+            {
+                return InternalServerError();
+            }
+        }
+
+        // DELETE: api/Comment/{id}
+        public IHttpActionResult Delete([FromUri] int id)
+        {
+            var service = CreateCommentService();
+
+            if (service.DeleteComment(id))
+            {
+                return Ok();
+            }
+            else
+            {
+                return InternalServerError();
+            }
+        }
     }
 }

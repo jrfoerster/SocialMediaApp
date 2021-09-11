@@ -44,21 +44,44 @@ namespace SocialMedia.Services
 		}
 
 		//GET BY Post ID ---  READ BY ID
-		public LikeDetail GetLikeById(int id)
+		public IEnumerable<LikeDetail> GetLikeByPostId(int id)
 		{
 			using (var ctx = new ApplicationDbContext())
 			{
-				var entity =
+				var query =
 					ctx
 						.Likes
-						.Single(e => e.PostId == id && e.OwnerId == _userId);
-				return
+						.Where(e => e.PostId == id)
+						.Select(e =>
+		
 					new LikeDetail
 					{
+						Id = e.Id,
+						OwnerId = e.OwnerId,
+						PostId = e.PostId
+					});
+				return query.ToArray();
+			}
+		}
+
+		//GET BY Owner ID ---  READ BY ID
+		public IEnumerable<LikeDetail> GetLikeByOwnerId(Guid id)
+		{
+			using (var ctx = new ApplicationDbContext())
+			{
+				var query =
+					ctx
+						.Likes
+						.Where(e => e.OwnerId == id)
+						.Select(e => 
+				
+					new LikeDetail
+					{
+						Id = e.Id,
 						OwnerId = _userId,
-						PostId = entity.PostId,
-						Post = entity.Post
-					};
+						PostId = e.PostId
+					});
+				return query.ToArray();
 			}
 		}
 
@@ -70,7 +93,12 @@ namespace SocialMedia.Services
 				var entity =
 					ctx
 						.Likes
-						.Single(e => e.PostId == model.PostId && e.OwnerId == _userId);
+						.FirstOrDefault(e => e.Id == model.Id && e.OwnerId == _userId);
+
+				if (entity is null)
+                {
+					return false;
+                }
 
 				entity.PostId = model.PostId;
 
@@ -79,14 +107,19 @@ namespace SocialMedia.Services
 		}
 
 		// DELETE
-		public bool DeleteLike(int postId)
+		public bool DeleteLike(int id)
 		{
 			using (var ctx = new ApplicationDbContext())
 			{
 				var entity =
 					ctx
 						.Likes
-						.Single(e => e.PostId == postId && e.OwnerId == _userId);
+						.FirstOrDefault(e => e.Id == id && e.OwnerId == _userId);
+
+				if (entity is null)
+                {
+					return false;
+                }
 
 				ctx.Likes.Remove(entity);
 

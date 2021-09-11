@@ -40,6 +40,27 @@ namespace SocialMedia.Services
             }
         }
 
+        public CommentDetail GetCommentById(int id)
+        {
+            using (var context = ApplicationDbContext.Create())
+            {
+                var comment = context.Comments.FirstOrDefault(c => c.Id == id);
+                
+                if (comment is null)
+                {
+                    return null;
+                }
+
+                return new CommentDetail
+                {
+                    Id = comment.Id,
+                    PostId = comment.PostId,
+                    Text = comment.Text,
+                    AuthorId = comment.AuthorId
+                };
+            }
+        }
+
         public IEnumerable<CommentListItem> GetCommentsByPostId(int postId)
         {
             using (var context = ApplicationDbContext.Create())
@@ -69,6 +90,38 @@ namespace SocialMedia.Services
                     });
 
                 return query.ToArray();
+            }
+        }
+
+        public bool UpdateComment(CommentUpdate model)
+        {
+            using (var context = ApplicationDbContext.Create())
+            {
+                var comment = context.Comments.FirstOrDefault(c => c.Id == model.CommentId && c.AuthorId == _userId);
+
+                if (comment is null)
+                {
+                    return false;
+                }
+
+                comment.Text = model.Text;
+                return context.SaveChanges() == 1;
+            }
+        }
+
+        public bool DeleteComment(int id)
+        {
+            using (var context = ApplicationDbContext.Create())
+            {
+                var comment = context.Comments.FirstOrDefault(c => c.Id == id && c.AuthorId == _userId);
+
+                if (comment is null)
+                {
+                    return false;
+                }
+
+                context.Comments.Remove(comment);
+                return context.SaveChanges() == 1;
             }
         }
     }

@@ -26,7 +26,7 @@ namespace SocialMedia.WebApi.Controllers
                 return BadRequest(ModelState);
 
             var service = CreateReplyService();
-            
+
             if (!service.CommentIdExists(reply.CommentId))
                 return NotFound();
 
@@ -41,6 +41,35 @@ namespace SocialMedia.WebApi.Controllers
             ReplyService replyService = CreateReplyService();
             var replies = replyService.GetReplies();
             return Ok(replies);
+        }
+
+        public IHttpActionResult GetAllByCommentId(int id)
+        {
+            var service = CreateReplyService();
+            var replies = service.GetRepliesByCommentId(id);
+            return Ok(replies);
+        }
+        public IHttpActionResult Delete(int id)
+        {
+            var service = CreateReplyService();
+
+            if (!service.DeleteReply(id))
+                return InternalServerError();
+
+            return Ok();
+        }
+
+        public IHttpActionResult Put(ReplyEdit reply)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var service = CreateReplyService();
+
+            if (!service.UpdateReply(reply))
+                return InternalServerError();
+
+            return Ok();
         }
     }
 }
