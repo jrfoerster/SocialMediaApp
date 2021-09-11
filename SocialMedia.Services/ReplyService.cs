@@ -80,5 +80,21 @@ namespace SocialMedia.Services
                 return query.ToArray();
             }
         }
+
+        public bool DeleteReply(int commentId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                ctx
+                .Replies
+                .Single(e => e.CommentId == commentId && e.AuthorId == _userId);
+
+                ctx.Replies.Remove(entity);
+
+                return ctx.SaveChanges() == 1;
+            }
+            
+        }
     }
 }
