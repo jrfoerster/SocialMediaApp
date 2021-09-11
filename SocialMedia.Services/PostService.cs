@@ -83,9 +83,23 @@ namespace SocialMedia.Services
                         .Posts.FirstOrDefault(p => p.Id == model.PostId && p.AuthorId == _authorId);
                 post.Title = model.Title;
                 post.Text = model.Text;
-                post.PostId = model.PostId;
+             
+                return ctx.SaveChanges() == 1;
+            }
+        }
+
+        public bool DeletePost(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var post =
+                    ctx
+                        .Posts.FirstOrDefault(p => p.Id == id && p.AuthorId == _authorId);
+
+                ctx.Posts.Remove(post);
 
                 return ctx.SaveChanges() == 1;
+
             }
         }
     }
