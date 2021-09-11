@@ -87,5 +87,21 @@ namespace SocialMedia.Services
                 return context.SaveChanges() == 1;
             }
         }
+
+        public bool DeleteComment(int id)
+        {
+            using (var context = ApplicationDbContext.Create())
+            {
+                var comment = context.Comments.FirstOrDefault(c => c.Id == id && c.AuthorId == _userId);
+
+                if (comment is null)
+                {
+                    return false;
+                }
+
+                context.Comments.Remove(comment);
+                return context.SaveChanges() == 1;
+            }
+        }
     }
 }

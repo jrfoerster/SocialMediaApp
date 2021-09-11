@@ -102,9 +102,19 @@ namespace SocialMedia.WebApi.Controllers
             }
         }
 
-        //// DELETE: api/Comment/5
-        //public void Delete(int id)
-        //{
-        //}
+        // DELETE: api/Comment/{id}
+        public IHttpActionResult Delete([FromUri] int id)
+        {
+            var service = CreateCommentService();
+            
+            if (service.DeleteComment(id))
+            {
+                return Ok();
+            }
+            else
+            {
+                return InternalServerError();
+            }
+        }
     }
 }

@@ -70,6 +70,17 @@ namespace SocialMedia.WebApi.Controllers
         //}
 
         //// DELETE api/<controller>/5
+        public IHttpActionResult Delete (int id)
+        {
+            var service = CreatePostService();
+
+            if (!service.DeletePost(id))
+                return InternalServerError();
+
+            return Ok();
+        }
+
+
         //public void Delete(int id)
         //{
         //}
