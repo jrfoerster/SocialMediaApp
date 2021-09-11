@@ -39,5 +39,12 @@ namespace SocialMedia.WebApi.Controllers
             var replies = replyService.GetReplies();
             return Ok(replies);
         }
+
+        public IHttpActionResult GetAllByCommentId(int id)
+        {
+            var service = CreateReplyService();
+            var replies = service.GetRepliesByCommentId(id);
+            return Ok(replies);
+        }
     }
 }
