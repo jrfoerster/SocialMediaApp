@@ -73,5 +73,20 @@ namespace SocialMedia.Services
                 return query.ToArray();
             }
         }
+
+        public bool UpdatePost(PostUpdate model)
+        {
+            using(var ctx = new ApplicationDbContext())
+            {
+                var post =
+                    ctx
+                        .Posts.FirstOrDefault(p => p.Id == model.PostId && p.AuthorId == _authorId);
+                post.Title = model.Title;
+                post.Text = model.Text;
+                post.PostId = model.PostId;
+
+                return ctx.SaveChanges() == 1;
+            }
+        }
     }
 }

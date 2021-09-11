@@ -49,7 +49,22 @@ namespace SocialMedia.WebApi.Controllers
             return Ok();
         }
 
-        //// PUT api/<controller>/5
+        //// PUT api/<controller>/
+        public IHttpActionResult Update(PostUpdate post)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var service = CreatePostService();
+
+            if (!service.UpdatePost(post))
+                return InternalServerError();
+
+            return Ok();
+        }
+
+
+
         //public void Put(int id, [FromBody] string value)
         //{
         //}
