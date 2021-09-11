@@ -54,5 +54,24 @@ namespace SocialMedia.Services
                 return query.ToArray();
             }
         }
+
+        public IEnumerable <PostListItem> GetPostsByAuthorId(Guid authorId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query =
+                    ctx
+                        .Posts
+                        .Where(e => e.AuthorId == authorId)
+                        .Select(e => 
+                        
+                    new PostListItem
+                    {
+                        Title = e.Title,
+                        Text = e.Text
+                    });
+                return query.ToArray();
+            }
+        }
     }
 }

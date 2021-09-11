@@ -28,6 +28,13 @@ namespace SocialMedia.WebApi.Controllers
             return Ok(posts);
         }
 
+        public IHttpActionResult Get(Guid authorId)
+        {
+            PostService postService = CreatePostService();
+            var post = postService.GetPostsByAuthorId(authorId);
+            return Ok(post);
+        }
+
         // POST api/<controller>
         public IHttpActionResult Post(PostCreate post)
         {
