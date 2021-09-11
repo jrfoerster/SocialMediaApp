@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SocialMedia.Models
 {
@@ -12,6 +7,8 @@ namespace SocialMedia.Models
         [Required]
         [MaxLength(140, ErrorMessage = "Maximum character exceeded")]
         public string Text { get; set; }
+
+        [Required]
         public int CommentId { get; set; }
     }
 }
