@@ -46,5 +46,18 @@ namespace SocialMedia.WebApi.Controllers
             var replies = service.GetRepliesByCommentId(id);
             return Ok(replies);
         }
+
+        public IHttpActionResult Put(ReplyEdit reply)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var service = CreateReplyService();
+
+            if (!service.UpdateReply(reply))
+                return InternalServerError();
+
+            return Ok();
+        }
     }
 }
